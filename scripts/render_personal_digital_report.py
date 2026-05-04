@@ -814,7 +814,7 @@ def render_html(payload: dict[str, Any], template: str, title: str, name: str, s
         f'<div class="evidence-item"><b>{esc(value)}</b><span>{esc(label)} · {esc(detail)}</span></div>'
         for label, value, detail in payload["evidence_cards"]
     )
-    risk_html = "".join(
+    risk_html = "\n".join(
         f"""
         <article class="risk">
           <div class="rank">{idx}</div>
@@ -827,7 +827,7 @@ def render_html(payload: dict[str, Any], template: str, title: str, name: str, s
             <span>risk signal {round(as_float(risk['score']), 1)}</span>
           </div>
         </article>
-        """
+        """.strip()
         for idx, risk in enumerate(payload["risks"], start=1)
     )
     domain_bars = "\n".join(render_bar(domain, count, max_domain, "top domain") for domain, count in top_domains)

@@ -24,7 +24,9 @@ last30days-digital-report/
 │   └── openai.yaml
 ├── assets/
 │   ├── examples/
-│   │   └── sample_usage_summary.json
+│   │   ├── sample_usage_summary.json
+│   │   ├── sample-report.html
+│   │   └── sample-report.share-copy.md
 │   └── guizang-ppt/
 │       ├── template.html
 │       ├── motion.min.js
@@ -50,7 +52,7 @@ Clone or copy this folder into your Codex skills directory:
 
 ```bash
 mkdir -p ~/.codex/skills
-git clone https://github.com/bigcongcong/last30days-digital-report.git \
+git clone https://github.com/yuevthins/last30days-digital-report.git \
   ~/.codex/skills/last30days-digital-report
 ```
 
@@ -61,7 +63,7 @@ Restart Codex after installing or updating a skill, because skill discovery happ
 Other local agents can use the same folder as a plain workflow package:
 
 ```bash
-git clone https://github.com/bigcongcong/last30days-digital-report.git
+git clone https://github.com/yuevthins/last30days-digital-report.git
 ```
 
 Then point the agent to `SKILL.md` and the scripts under `scripts/`.
@@ -100,6 +102,15 @@ python3 scripts/scaffold_guizang_deck.py \
 ```
 
 Open the generated HTML directly in a browser. No local server is required for standard reports. Guizang decks also work as static HTML and copy a local `assets/motion.min.js` file next to `index.html`.
+
+## Example Output
+
+The repo includes a deterministic sample report generated from the redacted demo JSON:
+
+- `assets/examples/sample-report.html`
+- `assets/examples/sample-report.share-copy.md`
+
+These files are example outputs, not reusable templates. Use them to understand the renderer's finished artifact shape, source-boundary wording, action-advice structure, and share-copy format.
 
 ## Output Modes
 

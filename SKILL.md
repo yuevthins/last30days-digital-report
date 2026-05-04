@@ -86,3 +86,5 @@ Every final report should include:
 - `assets/guizang-ppt/template.html`: bundled Guizang HTML deck seed.
 - `assets/guizang-ppt/motion.min.js`: local animation module copied into generated decks.
 - `assets/examples/sample_usage_summary.json`: redacted shape reference for smoke tests.
+- `assets/examples/sample-report.html`: generated example output from the redacted sample JSON; not a template.
+- `assets/examples/sample-report.share-copy.md`: generated share-copy example paired with the sample report.

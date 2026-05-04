@@ -1,0 +1,578 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="你看起来很忙，但上下文切换太密，很多工作块没有沉到产物里。" />
+  <meta property="og:title" content="一个月的使用记录暴露了真问题：忙，不等于推进。" />
+  <meta property="og:description" content="你看起来很忙，但上下文切换太密，很多工作块没有沉到产物里。" />
+  <meta property="og:type" content="article" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <title>Demo Last30Days 个人数字化报告 · Editorial Diagnosis</title>
+  <style>
+    :root {
+      --bg: #f7f2e8;
+      --surface: #fffaf0;
+      --surface2: #efe6d7;
+      --ink: #171513;
+      --muted: #665e53;
+      --line: #d7cab9;
+      --accent: #d83a24;
+      --accent2: #245bd6;
+      --accent3: #087f69;
+      --hero: #171513;
+      --hero-ink: #fffaf0;
+      --radius: 8px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        linear-gradient(90deg, rgba(90,90,90,.055) 1px, transparent 1px),
+        linear-gradient(180deg, rgba(90,90,90,.045) 1px, transparent 1px),
+        var(--bg);
+      background-size: 28px 28px;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "PingFang SC", "Microsoft YaHei", Arial, sans-serif;
+      line-height: 1.5;
+      letter-spacing: 0;
+    }
+    a { color: inherit; }
+    .page {
+      width: min(1420px, calc(100% - 40px));
+      margin: 0 auto;
+      padding: 26px 0 72px;
+    }
+    .topline {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 0 0 16px;
+      border-bottom: 2px solid var(--ink);
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 850;
+      text-transform: uppercase;
+    }
+    .hero {
+      min-height: 72vh;
+      display: grid;
+      grid-template-columns: minmax(0, 1.08fr) minmax(380px, .92fr);
+      gap: 28px;
+      padding: 34px 0 38px;
+      border-bottom: 3px solid var(--ink);
+    }
+    .hero-copy {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 28px;
+    }
+    .kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+    .kicker:before {
+      content: "";
+      width: 42px;
+      height: 4px;
+      background: var(--accent);
+    }
+    h1 {
+      margin: 18px 0 20px;
+      max-width: 930px;
+      font-size: clamp(54px, 7.8vw, 116px);
+      line-height: .92;
+      font-weight: 950;
+      letter-spacing: 0;
+    }
+    .lede {
+      max-width: 860px;
+      margin: 0;
+      font-size: clamp(20px, 2.2vw, 32px);
+      line-height: 1.24;
+      font-weight: 820;
+    }
+    .lede strong { color: var(--accent); }
+    .source-note {
+      max-width: 860px;
+      color: var(--muted);
+      font-size: 14px;
+      margin: 0;
+    }
+    .hero-panel {
+      background: var(--hero);
+      color: var(--hero-ink);
+      border-radius: var(--radius);
+      border: 1px solid var(--line);
+      min-height: 600px;
+      padding: 24px;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      overflow: hidden;
+      box-shadow: 0 24px 70px rgba(0,0,0,.14);
+    }
+    .panel-head, .panel-foot {
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      opacity: .72;
+      font-size: 12px;
+      font-weight: 850;
+      text-transform: uppercase;
+    }
+    .score {
+      align-self: center;
+    }
+    .score-number {
+      font-size: clamp(82px, 10vw, 156px);
+      line-height: .86;
+      font-weight: 950;
+    }
+    .score-label {
+      max-width: 540px;
+      margin-top: 14px;
+      opacity: .74;
+      font-size: 15px;
+      font-weight: 720;
+    }
+    .evidence-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 26px;
+    }
+    .evidence-item {
+      min-height: 106px;
+      border: 1px solid color-mix(in srgb, var(--hero-ink) 22%, transparent);
+      background: color-mix(in srgb, var(--hero-ink) 8%, transparent);
+      border-radius: var(--radius);
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .evidence-item b {
+      font-size: clamp(30px, 4vw, 44px);
+      line-height: 1;
+      font-weight: 950;
+    }
+    .evidence-item span {
+      opacity: .70;
+      font-size: 12px;
+      font-weight: 760;
+    }
+    section {
+      padding: 42px 0;
+      border-bottom: 1px solid var(--line);
+    }
+    .section-head {
+      display: grid;
+      grid-template-columns: minmax(240px, .34fr) minmax(0, .66fr);
+      gap: 24px;
+      margin-bottom: 22px;
+    }
+    h2 {
+      margin: 0;
+      font-size: clamp(28px, 3.4vw, 54px);
+      line-height: 1;
+      letter-spacing: 0;
+    }
+    .section-head p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 17px;
+      max-width: 800px;
+    }
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 18px;
+      min-height: 160px;
+    }
+    .card h3 {
+      margin: 0 0 10px;
+      font-size: 19px;
+      line-height: 1.15;
+    }
+    .card .metric {
+      font-size: 34px;
+      line-height: 1;
+      font-weight: 950;
+      color: var(--accent);
+      margin: 12px 0 8px;
+    }
+    .card p, .card li {
+      color: var(--muted);
+      font-size: 14px;
+      margin: 0;
+    }
+    .risk-list {
+      display: grid;
+      gap: 10px;
+    }
+    .risk {
+      display: grid;
+      grid-template-columns: 52px minmax(0, .7fr) minmax(220px, .3fr);
+      gap: 16px;
+      align-items: stretch;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 14px;
+    }
+    .rank {
+      width: 52px;
+      height: 52px;
+      display: grid;
+      place-items: center;
+      background: var(--accent);
+      color: white;
+      border-radius: var(--radius);
+      font-weight: 950;
+      font-size: 20px;
+    }
+    .risk h3 { margin: 0 0 6px; font-size: 22px; }
+    .risk p { margin: 0; color: var(--muted); font-size: 14px; }
+    .risk-meta {
+      border-left: 1px solid var(--line);
+      padding-left: 14px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 760;
+    }
+    .bars { display: grid; gap: 12px; }
+    .bar-row {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 12px;
+    }
+    .bar-label {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      font-weight: 850;
+      margin-bottom: 8px;
+    }
+    .bar-track {
+      height: 14px;
+      background: var(--surface2);
+      border-radius: 999px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+    }
+    .bar-track i {
+      display: block;
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent), var(--accent2), var(--accent3));
+    }
+    .bar-detail {
+      color: var(--muted);
+      font-size: 12px;
+      margin-top: 8px;
+    }
+    .protocol {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+    .protocol ol {
+      margin: 12px 0 0;
+      padding-left: 20px;
+      color: var(--muted);
+    }
+    .protocol li { margin: 8px 0; }
+    .share {
+      display: grid;
+      grid-template-columns: minmax(320px, .45fr) minmax(0, .55fr);
+      gap: 18px;
+      align-items: stretch;
+    }
+    .cover {
+      aspect-ratio: 4 / 5;
+      background: var(--hero);
+      color: var(--hero-ink);
+      border-radius: var(--radius);
+      border: 1px solid var(--line);
+      padding: 26px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 520px;
+    }
+    .cover h3 {
+      margin: 0;
+      font-size: clamp(34px, 5vw, 68px);
+      line-height: .96;
+      letter-spacing: 0;
+    }
+    .cover b {
+      font-size: clamp(72px, 10vw, 132px);
+      line-height: .85;
+    }
+    .captions {
+      display: grid;
+      gap: 10px;
+    }
+    .caption {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 16px;
+      font-size: 15px;
+      color: var(--muted);
+    }
+    .caption strong { color: var(--ink); }
+    .boundary {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+    .boundary ul {
+      margin: 12px 0 0;
+      padding-left: 20px;
+      color: var(--muted);
+    }
+    .footer {
+      padding-top: 26px;
+      color: var(--muted);
+      font-size: 12px;
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    @media (max-width: 900px) {
+      .page { width: min(100% - 24px, 760px); }
+      .hero, .section-head, .share, .boundary { grid-template-columns: 1fr; }
+      .hero-panel { min-height: 520px; }
+      .cards, .protocol { grid-template-columns: 1fr; }
+      .risk { grid-template-columns: 46px minmax(0, 1fr); }
+      .risk-meta { grid-column: 2; border-left: 0; padding-left: 0; border-top: 1px solid var(--line); padding-top: 10px; }
+      .cover { min-height: 460px; }
+    }
+    @media print {
+      body { background: white; }
+      .page { width: 100%; padding: 0; }
+      .hero { min-height: auto; }
+      .card, .risk, .bar-row, .cover, .hero-panel { break-inside: avoid; box-shadow: none; }
+    }
+    </style>
+</head>
+<body class="template-editorial">
+  <main class="page">
+    <div class="topline">
+      <span>Editorial Diagnosis</span>
+      <span>30d · source: sample_usage_summary.json</span>
+    </div>
+
+    <header class="hero">
+      <div class="hero-copy">
+        <div>
+          <div class="kicker">Personal Digital Trace Report</div>
+          <h1>一个月的使用记录暴露了真问题：忙，不等于推进。</h1>
+          <p class="lede"><strong>结论：</strong>你看起来很忙，但上下文切换太密，很多工作块没有沉到产物里。</p>
+        </div>
+        <p class="source-note">生成时间：2026-05-04 12:00:00。本报告只使用聚合统计和脱敏元数据，不读取 cookie、私钥、密码、聊天正文或邮件正文。浏览器 visits 是行为事件，不等于精确屏幕时长。</p>
+      </div>
+      <aside class="hero-panel">
+        <div class="panel-head"><span>Focus Score</span><span>30d</span></div>
+        <div class="score">
+          <div class="score-number">56</div>
+          <div class="score-label">不是道德评分，而是基于信息流占比、AI 工具占比、切换率、深夜段和落盘债务估算出的收束压力。</div>
+          <div class="evidence-grid"><div class="evidence-item"><b>12,340</b><span>访问事件 · 30d browser events</span></div><div class="evidence-item"><b>386</b><span>唯一域名 · attention surface</span></div><div class="evidence-item"><b>19.9%</b><span>切换率 · 2,450 switches</span></div><div class="evidence-item"><b>1,410</b><span>AI 工具 · 11.4% of visits</span></div><div class="evidence-item"><b>980</b><span>信息流 · 7.9% of visits</span></div><div class="evidence-item"><b>2,480</b><span>深夜段 · 20.1% from 22-03</span></div><div class="evidence-item"><b>1,280</b><span>Downloads · 420 recent 30d</span></div><div class="evidence-item"><b>4</b><span>Shell 风险 · secret-like patterns</span></div></div>
+        </div>
+        <div class="panel-foot"><span>210 sessions</span><span>2,450 switches</span></div>
+      </aside>
+    </header>
+
+    <section>
+      <div class="section-head">
+        <h2>风险排序</h2>
+        <p>排序来自可重复行为信号，而不是泛泛建议。越靠前，越应该先加硬规则。</p>
+      </div>
+      <div class="risk-list"><article class="risk">
+          <div class="rank">1</div>
+          <div>
+            <h3>上下文切换</h3>
+            <p>域名切换和混合会话越高，越难形成稳定判断和可复用产物。</p>
+          </div>
+          <div class="risk-meta">
+            <span>19.9% switch rate, 386 domains</span>
+            <span>risk signal 34.9</span>
+          </div>
+        </article>
+<article class="risk">
+          <div class="rank">2</div>
+          <div>
+            <h3>AI 工具试吃</h3>
+            <p>AI 入口数量过多时，任务会从交付转成换工具和比模型。</p>
+          </div>
+          <div class="risk-meta">
+            <span>1,410 AI-tool visits, 3 AI domains</span>
+            <span>risk signal 34.2</span>
+          </div>
+        </article>
+<article class="risk">
+          <div class="rank">3</div>
+          <div>
+            <h3>信息流黑洞</h3>
+            <p>社交与视频入口在工作流里太靠前，容易把卡住变成继续刷资料。</p>
+          </div>
+          <div class="risk-meta">
+            <span>980 social-feed visits / 30d</span>
+            <span>risk signal 25.9</span>
+          </div>
+        </article>
+<article class="risk">
+          <div class="rank">4</div>
+          <div>
+            <h3>深夜漂移</h3>
+            <p>深夜适合收尾，不适合开新工具、新配置和大范围整理。</p>
+          </div>
+          <div class="risk-meta">
+            <span>2,480 visits from 22:00-03:00</span>
+            <span>risk signal 24.7</span>
+          </div>
+        </article>
+<article class="risk">
+          <div class="rank">5</div>
+          <div>
+            <h3>落盘债务</h3>
+            <p>下载和项目入口越散，每次开工前的找版本、找路径成本越高。</p>
+          </div>
+          <div class="risk-meta">
+            <span>420 recent Downloads files in 30d</span>
+            <span>risk signal 18.9</span>
+          </div>
+        </article>
+<article class="risk">
+          <div class="rank">6</div>
+          <div>
+            <h3>终端债务</h3>
+            <p>终端适合执行，不适合当长期记忆或密钥暂存地。</p>
+          </div>
+          <div class="risk-meta">
+            <span>4 secret-like shell-history lines</span>
+            <span>risk signal 4.8</span>
+          </div>
+        </article></div>
+    </section>
+
+    <section>
+      <div class="section-head">
+        <h2>域名与类别</h2>
+        <p>这部分是 last30days 风格的"群众投票"转译：不是别人投票，而是你的电脑使用行为在投票。</p>
+      </div>
+      <div class="cards">
+        <article class="card">
+          <h3>信息流占比</h3>
+          <div class="metric">7.9%</div>
+          <p>社交、视频、内容流入口的访问事件占比。</p>
+        </article>
+        <article class="card">
+          <h3>AI 占比</h3>
+          <div class="metric">11.4%</div>
+          <p>AI 工具相关入口访问事件占比。高不一定坏，问题是没有固定分工。</p>
+        </article>
+        <article class="card">
+          <h3>深夜段</h3>
+          <div class="metric">20.1%</div>
+          <p>22:00-03:00 的访问事件占比，重点看是否在开新坑。</p>
+        </article>
+      </div>
+      <div style="height:18px"></div>
+      <div class="cards">
+        <div class="card" style="grid-column: span 2;"><h3>Top domains</h3><div class="bars"><div class="bar-row"><div class="bar-label"><span>docs.example.com</span><b>820</b></div><div class="bar-track"><i style="width:100%"></i></div><div class="bar-detail">top domain</div></div>
+<div class="bar-row"><div class="bar-label"><span>chatgpt.com</span><b>683</b></div><div class="bar-track"><i style="width:83%"></i></div><div class="bar-detail">top domain</div></div>
+<div class="bar-row"><div class="bar-label"><span>github.com</span><b>640</b></div><div class="bar-track"><i style="width:78%"></i></div><div class="bar-detail">top domain</div></div>
+<div class="bar-row"><div class="bar-label"><span>x.com</span><b>510</b></div><div class="bar-track"><i style="width:62%"></i></div><div class="bar-detail">top domain</div></div>
+<div class="bar-row"><div class="bar-label"><span>youtube.com</span><b>310</b></div><div class="bar-track"><i style="width:38%"></i></div><div class="bar-detail">top domain</div></div>
+<div class="bar-row"><div class="bar-label"><span>claude.ai</span><b>260</b></div><div class="bar-track"><i style="width:32%"></i></div><div class="bar-detail">top domain</div></div>
+<div class="bar-row"><div class="bar-label"><span>notion.so</span><b>210</b></div><div class="bar-track"><i style="width:26%"></i></div><div class="bar-detail">top domain</div></div>
+<div class="bar-row"><div class="bar-label"><span>figma.com</span><b>180</b></div><div class="bar-track"><i style="width:22%"></i></div><div class="bar-detail">top domain</div></div>
+<div class="bar-row"><div class="bar-label"><span>gemini.google.com</span><b>168</b></div><div class="bar-track"><i style="width:20%"></i></div><div class="bar-detail">top domain</div></div>
+<div class="bar-row"><div class="bar-label"><span>example-search.com</span><b>150</b></div><div class="bar-track"><i style="width:18%"></i></div><div class="bar-detail">top domain</div></div></div></div>
+        <div class="card"><h3>Behavior categories</h3><div class="bars"><div class="bar-row"><div class="bar-label"><span>knowledge_docs</span><b>2,260</b></div><div class="bar-track"><i style="width:100%"></i></div><div class="bar-detail">behavior category</div></div>
+<div class="bar-row"><div class="bar-label"><span>ai_tools</span><b>1,410</b></div><div class="bar-track"><i style="width:62%"></i></div><div class="bar-detail">behavior category</div></div>
+<div class="bar-row"><div class="bar-label"><span>dev_ops</span><b>1,320</b></div><div class="bar-track"><i style="width:58%"></i></div><div class="bar-detail">behavior category</div></div>
+<div class="bar-row"><div class="bar-label"><span>social_feeds</span><b>980</b></div><div class="bar-track"><i style="width:43%"></i></div><div class="bar-detail">behavior category</div></div>
+<div class="bar-row"><div class="bar-label"><span>search</span><b>760</b></div><div class="bar-track"><i style="width:34%"></i></div><div class="bar-detail">behavior category</div></div>
+<div class="bar-row"><div class="bar-label"><span>design_ref</span><b>520</b></div><div class="bar-track"><i style="width:23%"></i></div><div class="bar-detail">behavior category</div></div>
+<div class="bar-row"><div class="bar-label"><span>shopping</span><b>180</b></div><div class="bar-track"><i style="width:8%"></i></div><div class="bar-detail">behavior category</div></div></div></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-head">
+        <h2>高切换会话</h2>
+        <p>长会话不等于深度工作。真正要看的是访问量、切换数和唯一域名是否同时升高。</p>
+      </div>
+      <div class="cards"><article class="card"><h3>05-01 10:00 -> 14:20</h3><div class='metric'>260m</div><p>384 visits · 92 switches · 31 domains</p></article><article class="card"><h3>05-02 21:10 -> 23:40</h3><div class='metric'>150m</div><p>260 visits · 70 switches · 24 domains</p></article></div>
+    </section>
+
+    <section>
+      <div class="section-head">
+        <h2>行动建议</h2>
+        <p>目标不是更努力，而是把"继续找、继续试、继续开页面"强制改成"落到文件、状态和下一步"。</p>
+      </div>
+      <div class="protocol"><article class="card"><h3>今天</h3><ol><li>写一个当前任务状态文件，包含目标、产物路径、下一步。</li><li>工作块内只保留资料源、目标产物、执行工具三类页面。</li><li>45 分钟内只允许一个主 AI；想换工具必须先写失败证据。</li><li>把 Downloads 当天新增内容分成删除、归项目、入资料库。</li></ol></article><article class="card"><h3>7 天</h3><ol><li>建立信息流窗口：12:30-12:50 和 21:30-21:50，其余时间屏蔽。</li><li>把重复 3 次以上的终端命令落成脚本或文档。</li><li>给高频项目补 `STATUS.md`，每天只更新一个事实状态。</li><li>把 AI 工具固定分工，减少中途试吃。</li></ol></article><article class="card"><h3>30 天</h3><ol><li>每周生成一次本报告，比较切换率、信息流占比、AI 占比、Downloads 增量。</li><li>维护一个入口账本：每个新项目必须有唯一根目录和状态文件。</li><li>轮换已进入历史的敏感 token，并把密钥输入迁移到 Keychain 或专用配置。</li></ol></article></div>
+    </section>
+
+    <section>
+      <div class="section-head">
+        <h2>社交传播包</h2>
+        <p>这个模块用于截图、发小红书、朋友圈、飞书群或内部复盘。传播内容必须带证据边界，避免变成鸡汤。</p>
+      </div>
+      <div class="share">
+        <div class="cover">
+          <div>
+            <div class="kicker" style="color: currentColor;">Screenshot Cover</div>
+            <h3>一个月的使用记录暴露了真问题：忙，不等于推进。</h3>
+          </div>
+          <b>56</b>
+          <p>你看起来很忙，但上下文切换太密，很多工作块没有沉到产物里。</p>
+        </div>
+        <div class="captions"><div class="caption"><strong>小红书版：</strong>一个月的使用记录暴露了真问题：忙，不等于推进。 我把浏览器、AI 工具、Downloads、Shell 历史做了脱敏聚合，最刺痛的一点是：域名切换和混合会话越高，越难形成稳定判断和可复用产物。</div><div class="caption"><strong>朋友圈版：</strong>这份报告不是算命，是电脑行为记录。19.9% switch rate, 386 domains，说明我的下一步不是换工具，而是加收束规则。</div><div class="caption"><strong>内部复盘版：</strong>本周先改三个指标：切换率 19.9%、AI 占比 11.4%、信息流占比 7.9%。每周复跑一次。</div></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-head">
+        <h2>证据边界</h2>
+        <p>这里决定报告可信度。缺失数据不能伪装成已分析数据。</p>
+      </div>
+      <div class="boundary">
+        <article class="card">
+          <h3>已纳入</h3>
+          <ul><li>2 browser history files</li><li>1 bookmark files</li><li>1 top-sites files</li><li>shell history aggregate</li><li>filesystem metadata</li><li>installed tool surface</li></ul>
+        </article>
+        <article class="card">
+          <h3>缺失 / 被挡 / 不读取</h3>
+          <ul><li>Knowledge DB: not included in this demo sample</li><li>不读取 cookie、密码、私钥、邮件、聊天正文和私密正文。</li></ul>
+        </article>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <span>Generated by last30days-digital-report · template editorial</span>
+      <span>Self-contained HTML · no external CDN · printable</span>
+    </footer>
+  </main>
+</body>
+</html>

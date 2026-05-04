@@ -4,7 +4,7 @@
 
 ```bash
 mkdir -p ~/.codex/skills
-git clone https://github.com/bigcongcong/last30days-digital-report.git \
+git clone https://github.com/yuevthins/last30days-digital-report.git \
   ~/.codex/skills/last30days-digital-report
 ```
 
@@ -130,6 +130,13 @@ Generated Chronicle HTML reports, generated social cards, and layout mockups are
 Prefer a redacted aggregate JSON. Do not feed raw browser cookies, password manager exports, private keys, chat transcripts, emails, private note bodies, or raw secret-bearing shell commands into a public report workflow.
 
 Use `assets/examples/sample_usage_summary.json` as the shape reference.
+
+The generated report sample is also included:
+
+- `assets/examples/sample-report.html`
+- `assets/examples/sample-report.share-copy.md`
+
+Treat these as example outputs, not templates.
 
 ## Publishing Checklist
 

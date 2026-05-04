@@ -13,7 +13,9 @@ Use this checklist before publishing the skill to GitHub.
 - [ ] `assets/guizang-ppt/template.html` exists as the only bundled reusable visual template.
 - [ ] `assets/guizang-ppt/motion.min.js` exists for offline deck playback.
 - [ ] `assets/examples/sample_usage_summary.json` exists for repeatable smoke tests.
-- [ ] Generated Chronicle HTML reports, generated social cards, and mockup scripts are not staged for release.
+- [ ] `assets/examples/sample-report.html` exists as a generated report example.
+- [ ] `assets/examples/sample-report.share-copy.md` exists as the paired generated share-copy example.
+- [ ] User-specific Chronicle HTML reports, generated social cards, and mockup scripts are not staged for release.
 
 ## Commands
 
@@ -21,14 +23,14 @@ Use this checklist before publishing the skill to GitHub.
 python3 -m py_compile scripts/render_personal_digital_report.py scripts/scaffold_guizang_deck.py
 python3 scripts/render_personal_digital_report.py \
   --input assets/examples/sample_usage_summary.json \
-  --output outputs/verify-report.html \
+  --output assets/examples/sample-report.html \
   --template editorial \
   --window 30d
 python3 scripts/scaffold_guizang_deck.py \
   --output outputs/verify-guizang \
   --title "Verify Guizang Deck" \
   --theme indigo
-rg -n "\\[必填\\]|修复协议" outputs/verify-report.html outputs/verify-guizang/index.html
+rg -n "\\[必填\\]|修复协议" assets/examples/sample-report.html outputs/verify-guizang/index.html
 ```
 
 The final `rg` command should return no matches.
