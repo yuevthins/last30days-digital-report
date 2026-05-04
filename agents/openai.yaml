@@ -1,0 +1,7 @@
+interface:
+  display_name: "Last30Days Digital Report"
+  short_description: "Chronicle 诊断与歸藏网页 PPT 模板"
+  brand_color: "#D83A24"
+  default_prompt: "Use $last30days-digital-report to turn my computer usage traces into an evidence-backed report or a Guizang-style HTML deck."
+policy:
+  allow_implicit_invocation: true

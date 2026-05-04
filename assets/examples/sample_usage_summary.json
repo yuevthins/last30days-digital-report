@@ -1,0 +1,127 @@
+{
+  "generated_at": "2026-05-04 12:00:00",
+  "data_source_inventory": {
+    "browser_history_files_discovered": [
+      "Chrome History",
+      "Safari History"
+    ],
+    "bookmarks_files_discovered": [
+      "Chrome Bookmarks"
+    ],
+    "top_sites_files_discovered": [
+      "Chrome Top Sites"
+    ],
+    "knowledge_db": {
+      "read_status": "not included in this demo sample"
+    }
+  },
+  "browser_history": {
+    "event_summary": {
+      "30d": {
+        "total_visits": 12340,
+        "unique_domains": 386,
+        "top_domains": [
+          ["docs.example.com", 820],
+          ["chatgpt.com", 683],
+          ["github.com", 640],
+          ["x.com", 510],
+          ["youtube.com", 310],
+          ["claude.ai", 260],
+          ["notion.so", 210],
+          ["figma.com", 180],
+          ["gemini.google.com", 168],
+          ["example-search.com", 150]
+        ],
+        "category_counts": [
+          ["knowledge_docs", 2260],
+          ["ai_tools", 1410],
+          ["dev_ops", 1320],
+          ["social_feeds", 980],
+          ["search", 760],
+          ["design_ref", 520],
+          ["shopping", 180]
+        ],
+        "switches": 2450,
+        "switch_rate": 0.1985,
+        "sessions": 210,
+        "top_sessions": [
+          {
+            "start": "05-01 10:00",
+            "end": "14:20",
+            "minutes": 260,
+            "visits": 384,
+            "switches": 92,
+            "unique_domains": 31
+          },
+          {
+            "start": "05-02 21:10",
+            "end": "23:40",
+            "minutes": 150,
+            "visits": 260,
+            "switches": 70,
+            "unique_domains": 24
+          }
+        ],
+        "hour_buckets": {
+          "00_03": 820,
+          "22_03": 2480,
+          "09_12": 2100
+        }
+      },
+      "7d": {
+        "total_visits": 3180,
+        "unique_domains": 154,
+        "top_domains": [
+          ["docs.example.com", 240],
+          ["chatgpt.com", 190],
+          ["github.com", 170],
+          ["x.com", 132],
+          ["youtube.com", 96]
+        ],
+        "category_counts": [
+          ["knowledge_docs", 610],
+          ["ai_tools", 390],
+          ["dev_ops", 340],
+          ["social_feeds", 280],
+          ["search", 180]
+        ],
+        "switches": 780,
+        "switch_rate": 0.2452,
+        "sessions": 62,
+        "top_sessions": [],
+        "hour_buckets": {
+          "00_03": 220,
+          "22_03": 690,
+          "09_12": 540
+        }
+      }
+    }
+  },
+  "filesystem": [
+    {
+      "path": "/Users/demo/Downloads",
+      "files": 1280,
+      "recent_files_7d": 88,
+      "recent_files_30d": 420
+    },
+    {
+      "path": "/Users/demo/Desktop",
+      "files": 86,
+      "recent_files_7d": 12,
+      "recent_files_30d": 40
+    }
+  ],
+  "shell_history": [
+    {
+      "lines": 1900,
+      "ai_cli_lines": 52,
+      "secret_like_lines": 4,
+      "long_lines_over_160": 22
+    }
+  ],
+  "tool_surface": {
+    "brew_formula_count": 180,
+    "npm_global_count": 34,
+    "pipx_count": 8
+  }
+}

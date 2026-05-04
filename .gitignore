@@ -1,0 +1,15 @@
+__pycache__/
+*.py[cod]
+.DS_Store
+.ruff_cache/
+.pytest_cache/
+.mypy_cache/
+outputs/
+dist/
+build/
+*.log
+assets/examples/chronicle-pc-cleanup-report.html
+assets/examples/chronicle-xhs-cover.html
+assets/template-presets.json
+references/huashu-report-patterns.md
+scripts/generate_layout_mockups*.py
